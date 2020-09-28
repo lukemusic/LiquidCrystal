@@ -263,3 +263,127 @@ unittest(scrollDisplayRight) {
     assertEqual(expected[i], pinLog[i]);
   }
 }
+
+unittest(setCursor) {
+  state->reset();
+  BitCollector enableBits;
+  logIndex = 0;
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  lcd.begin(16, 2);
+  state->digitalPin[enable].addObserver("lcd", &enableBits);
+  // top row
+  lcd.setCursor(0,0);
+  lcd.setCursor(1,0);
+  lcd.setCursor(2,0);
+  lcd.setCursor(3,0);
+  lcd.setCursor(4,0);
+  lcd.setCursor(5,0);
+  lcd.setCursor(6,0);
+  lcd.setCursor(7,0);
+  lcd.setCursor(8,0);
+  lcd.setCursor(9,0);
+  lcd.setCursor(10,0);
+  lcd.setCursor(11,0);
+  lcd.setCursor(12,0);
+  lcd.setCursor(13,0);
+  lcd.setCursor(14,0);
+  lcd.setCursor(15,0);
+  // bottom row
+  lcd.setCursor(0,1);
+  lcd.setCursor(1,1);
+  lcd.setCursor(2,1);
+  lcd.setCursor(3,1);
+  lcd.setCursor(4,1);
+  lcd.setCursor(5,1);
+  lcd.setCursor(6,1);
+  lcd.setCursor(7,1);
+  lcd.setCursor(8,1);
+  lcd.setCursor(9,1);
+  lcd.setCursor(10,1);
+  lcd.setCursor(11,1);
+  lcd.setCursor(12,1);
+  lcd.setCursor(13,1);
+  lcd.setCursor(14,1);
+  lcd.setCursor(15,1);
+  state->digitalPin[enable].removeObserver("lcd");
+  /*     rs rw  d7 to d0
+    128 : 0  0  1000      \
+      0 : 0  0      0000  full command: 10000000 = set cursor (0,0)
+    128 : 0  0  1000      \
+     16 : 0  0      0001  full command: 10000001 = set cursor (1,0)
+    128 : 0  0  1000      \
+     32 : 0  0      0010  full command: 10000010 = set cursor (2,0)
+    128 : 0  0  1000      \
+     48 : 0  0      0011  full command: 10000011 = set cursor (3,0)
+    128 : 0  0  1000      \
+     64 : 0  0      0100  full command: 10000100 = set cursor (4,0)
+    128 : 0  0  1000      \
+     80 : 0  0      0101  full command: 10000101 = set cursor (5,0)
+    128 : 0  0  1000      \
+     96 : 0  0      0110  full command: 10000110 = set cursor (6,0)
+    128 : 0  0  1000      \
+    112 : 0  0      0111  full command: 10000111 = set cursor (7,0)
+    128 : 0  0  1000      \
+    128 : 0  0      1000  full command: 10001000 = set cursor (8,0)
+    128 : 0  0  1000      \
+    144 : 0  0      1001  full command: 10001001 = set cursor (9,0)
+    128 : 0  0  1000      \
+    160 : 0  0      1010  full command: 10001010 = set cursor (10,0)
+    128 : 0  0  1000      \
+    176 : 0  0      1011  full command: 10001011 = set cursor (11,0)
+    128 : 0  0  1000      \
+    192 : 0  0      1100  full command: 10001100 = set cursor (12,0)
+    128 : 0  0  1000      \
+    208 : 0  0      1101  full command: 10001101 = set cursor (13,0)
+    128 : 0  0  1000      \
+    224 : 0  0      1110  full command: 10001110 = set cursor (14,0)
+    128 : 0  0  1000      \
+    240 : 0  0      1111  full command: 10001111 = set cursor (15,0)
+
+    192 : 0  0  1100      \
+      0 : 0  0      0000  full command: 11000000 = set cursor (0,1)
+    192 : 0  0  1100      \
+     16 : 0  0      0001  full command: 11000001 = set cursor (1,1)
+    192 : 0  0  1100      \
+     32 : 0  0      0010  full command: 11000010 = set cursor (2,1)
+    192 : 0  0  1100      \
+     48 : 0  0      0011  full command: 11000011 = set cursor (3,1)
+    192 : 0  0  1100      \
+     64 : 0  0      0100  full command: 11000100 = set cursor (4,1)
+    192 : 0  0  1100      \
+     80 : 0  0      0101  full command: 11000101 = set cursor (5,1)
+    192 : 0  0  1100      \
+     96 : 0  0      0110  full command: 11000110 = set cursor (6,1)
+    192 : 0  0  1100      \
+    112 : 0  0      0111  full command: 11000111 = set cursor (7,1)
+    192 : 0  0  1100      \
+    128 : 0  0      1000  full command: 11001000 = set cursor (8,1)
+    192 : 0  0  1100      \
+    144 : 0  0      1001  full command: 11001001 = set cursor (9,1)
+    192 : 0  0  1100      \
+    160 : 0  0      1010  full command: 11001010 = set cursor (10,1)
+    192 : 0  0  1100      \
+    176 : 0  0      1011  full command: 11001011 = set cursor (11,1)
+    192 : 0  0  1100      \
+    192 : 0  0      1100  full command: 11001100 = set cursor (12,1)
+    192 : 0  0  1100      \
+    208 : 0  0      1101  full command: 11001101 = set cursor (13,1)
+    192 : 0  0  1100      \
+    224 : 0  0      1110  full command: 11001110 = set cursor (14,1)
+    192 : 0  0  1100      \
+    240 : 0  0      1111  full command: 11001111 = set cursor (15,1)
+   */
+  const int expectedSize = 64;
+  int expected[expectedSize] = {128, 0, 128, 16, 128, 32, 128, 48, 128, 64,
+                                128, 80, 128, 96, 128, 112, 128, 128, 128, 144,
+                                128, 160, 128, 176, 128, 192, 128, 208, 128, 224,
+                                128, 240,
+                                192, 0, 192, 16, 192, 32, 192, 48, 192, 64,
+                                192, 80, 192, 96, 192, 112, 192, 128, 192, 144,
+                                192, 160, 192, 176, 192, 192, 192, 208, 192, 224,
+                                192, 240,};
+  assertEqual(expectedSize, logIndex);
+  for (int i = 0; i < expectedSize; ++i) {
+    assertEqual(expected[i], pinLog[i]);
+  }
+}
