@@ -22,11 +22,14 @@ GodmodeState *state = GODMODE();
 const int logSize = 100;
 int pinLog[logSize], logIndex = 0;
 
-class BitCollector : public DataStreamObserver {
+class BitCollector : public DataStreamObserver
+{
 public:
   BitCollector() : DataStreamObserver(false, false) {}
-  virtual void onBit(bool aBit) {
-    if (aBit && logIndex < logSize) {
+  virtual void onBit(bool aBit)
+  {
+    if (aBit && logIndex < logSize)
+    {
       int value = 0;
       value = (value << 1) + state->digitalPin[rs];
       value = (value << 1) + state->digitalPin[rw];
@@ -47,12 +50,14 @@ public:
   virtual String observerName() const { return "BitCollector"; }
 };
 
-unittest(className) {
+unittest(className)
+{
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   std::cout << "TESTING: " << lcd.className() << std::endl;
 }
 
-unittest(constructors) {
+unittest(constructors)
+{
   LiquidCrystal_Test lcd1(rs, enable, d4, d5, d6, d7);
   LiquidCrystal_Test lcd2(rs, rw, enable, d4, d5, d6, d7);
   LiquidCrystal_Test lcd3(rs, enable, d0, d1, d2, d3, d4, d5, d6, d7);
@@ -74,7 +79,8 @@ unittest(constructors) {
   delete lcd5;
 }
 
-unittest(init) {
+unittest(init)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -97,12 +103,14 @@ unittest(init) {
    */
   int expected[12] = {48, 48, 48, 32, 32, 0, 0, 192, 0, 16, 0, 96};
   assertEqual(12, logIndex);
-  for (int i = 0; i < logIndex; ++i) {
+  for (int i = 0; i < logIndex; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(begin_16_02) {
+unittest(begin_16_02)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -126,14 +134,22 @@ unittest(begin_16_02) {
    */
   int expected[12] = {48, 48, 48, 32, 32, 128, 0, 192, 0, 16, 0, 96};
   assertEqual(12, logIndex);
-  for (int i = 0; i < logIndex; ++i) {
+  for (int i = 0; i < logIndex; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(createChar) {
+unittest(createChar)
+{
   byte smiley[8] = {
-      B00000, B10001, B00000, B00000, B10001, B01110, B00000,
+      B00000,
+      B10001,
+      B00000,
+      B00000,
+      B10001,
+      B01110,
+      B00000,
   };
 
   // Test the function
@@ -165,15 +181,17 @@ unittest(createChar) {
     512 : 1  0      0000
 */
   const int expectedSize = 18;
-  int expected[expectedSize] = {64,  0,   512, 512, 528, 528, 512, 512, 512,
+  int expected[expectedSize] = {64, 0, 512, 512, 528, 528, 512, 512, 512,
                                 512, 528, 528, 512, 736, 512, 512, 512, 512};
   assertEqual(expectedSize, logIndex);
-  for (int i = 0; i < expectedSize; ++i) {
+  for (int i = 0; i < expectedSize; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(clear) {
+unittest(clear)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -188,12 +206,14 @@ unittest(clear) {
    */
   int expected[2] = {0, 16};
   assertEqual(2, logIndex);
-  for (int i = 0; i < logIndex; ++i) {
+  for (int i = 0; i < logIndex; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(print_hello) {
+unittest(print_hello)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -217,12 +237,14 @@ unittest(print_hello) {
   int expected[10] = {576, 640, 608, 592, 608, 704, 608, 704, 608, 752};
 
   assertEqual(10, logIndex);
-  for (int i = 0; i < logIndex; ++i) {
+  for (int i = 0; i < logIndex; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(scrollDisplayLeft) {
+unittest(scrollDisplayLeft)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -238,12 +260,14 @@ unittest(scrollDisplayLeft) {
   const int expectedSize = 2;
   int expected[expectedSize] = {16, 128};
   assertEqual(expectedSize, logIndex);
-  for (int i = 0; i < expectedSize; ++i) {
+  for (int i = 0; i < expectedSize; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(scrollDisplayRight) {
+unittest(scrollDisplayRight)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -259,12 +283,14 @@ unittest(scrollDisplayRight) {
   const int expectedSize = 2;
   int expected[expectedSize] = {16, 192};
   assertEqual(expectedSize, logIndex);
-  for (int i = 0; i < expectedSize; ++i) {
+  for (int i = 0; i < expectedSize; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
 
-unittest(setCursor) {
+unittest(setCursor)
+{
   state->reset();
   BitCollector enableBits;
   logIndex = 0;
@@ -272,39 +298,39 @@ unittest(setCursor) {
   lcd.begin(16, 2);
   state->digitalPin[enable].addObserver("lcd", &enableBits);
   // top row
-  lcd.setCursor(0,0);
-  lcd.setCursor(1,0);
-  lcd.setCursor(2,0);
-  lcd.setCursor(3,0);
-  lcd.setCursor(4,0);
-  lcd.setCursor(5,0);
-  lcd.setCursor(6,0);
-  lcd.setCursor(7,0);
-  lcd.setCursor(8,0);
-  lcd.setCursor(9,0);
-  lcd.setCursor(10,0);
-  lcd.setCursor(11,0);
-  lcd.setCursor(12,0);
-  lcd.setCursor(13,0);
-  lcd.setCursor(14,0);
-  lcd.setCursor(15,0);
+  lcd.setCursor(0, 0);
+  lcd.setCursor(1, 0);
+  lcd.setCursor(2, 0);
+  lcd.setCursor(3, 0);
+  lcd.setCursor(4, 0);
+  lcd.setCursor(5, 0);
+  lcd.setCursor(6, 0);
+  lcd.setCursor(7, 0);
+  lcd.setCursor(8, 0);
+  lcd.setCursor(9, 0);
+  lcd.setCursor(10, 0);
+  lcd.setCursor(11, 0);
+  lcd.setCursor(12, 0);
+  lcd.setCursor(13, 0);
+  lcd.setCursor(14, 0);
+  lcd.setCursor(15, 0);
   // bottom row
-  lcd.setCursor(0,1);
-  lcd.setCursor(1,1);
-  lcd.setCursor(2,1);
-  lcd.setCursor(3,1);
-  lcd.setCursor(4,1);
-  lcd.setCursor(5,1);
-  lcd.setCursor(6,1);
-  lcd.setCursor(7,1);
-  lcd.setCursor(8,1);
-  lcd.setCursor(9,1);
-  lcd.setCursor(10,1);
-  lcd.setCursor(11,1);
-  lcd.setCursor(12,1);
-  lcd.setCursor(13,1);
-  lcd.setCursor(14,1);
-  lcd.setCursor(15,1);
+  lcd.setCursor(0, 1);
+  lcd.setCursor(1, 1);
+  lcd.setCursor(2, 1);
+  lcd.setCursor(3, 1);
+  lcd.setCursor(4, 1);
+  lcd.setCursor(5, 1);
+  lcd.setCursor(6, 1);
+  lcd.setCursor(7, 1);
+  lcd.setCursor(8, 1);
+  lcd.setCursor(9, 1);
+  lcd.setCursor(10, 1);
+  lcd.setCursor(11, 1);
+  lcd.setCursor(12, 1);
+  lcd.setCursor(13, 1);
+  lcd.setCursor(14, 1);
+  lcd.setCursor(15, 1);
   state->digitalPin[enable].removeObserver("lcd");
   /*     rs rw  d7 to d0
     128 : 0  0  1000      \
@@ -374,16 +400,75 @@ unittest(setCursor) {
     240 : 0  0      1111  full command: 11001111 = set cursor (15,1)
    */
   const int expectedSize = 64;
-  int expected[expectedSize] = {128, 0, 128, 16, 128, 32, 128, 48, 128, 64,
-                                128, 80, 128, 96, 128, 112, 128, 128, 128, 144,
-                                128, 160, 128, 176, 128, 192, 128, 208, 128, 224,
-                                128, 240,
-                                192, 0, 192, 16, 192, 32, 192, 48, 192, 64,
-                                192, 80, 192, 96, 192, 112, 192, 128, 192, 144,
-                                192, 160, 192, 176, 192, 192, 192, 208, 192, 224,
-                                192, 240,};
+  int expected[expectedSize] = {
+      128,
+      0,
+      128,
+      16,
+      128,
+      32,
+      128,
+      48,
+      128,
+      64,
+      128,
+      80,
+      128,
+      96,
+      128,
+      112,
+      128,
+      128,
+      128,
+      144,
+      128,
+      160,
+      128,
+      176,
+      128,
+      192,
+      128,
+      208,
+      128,
+      224,
+      128,
+      240,
+      192,
+      0,
+      192,
+      16,
+      192,
+      32,
+      192,
+      48,
+      192,
+      64,
+      192,
+      80,
+      192,
+      96,
+      192,
+      112,
+      192,
+      128,
+      192,
+      144,
+      192,
+      160,
+      192,
+      176,
+      192,
+      192,
+      192,
+      208,
+      192,
+      224,
+      192,
+      240,
+  };
   assertEqual(expectedSize, logIndex);
-  for (int i = 0; i < expectedSize; ++i) {
+  for (int i = 0; i < expectedSize; ++i)
+  {
     assertEqual(expected[i], pinLog[i]);
   }
 }
