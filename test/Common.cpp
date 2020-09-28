@@ -260,48 +260,6 @@ unittest(failIfWrongValues) {
   assertFalse(pinValues.isEqualTo(expected));
 }
 
-unittest(setCursor) {
-  state->reset();
-  BitCollector enableBits;
-  logIndex = 0;
-  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
-  lcd.begin(16, 2);
-  state->digitalPin[enable].addObserver("lcd", &enableBits);
-  // top row
-  lcd.setCursor(0,0);
-  lcd.setCursor(1,0);
-  lcd.setCursor(2,0);
-  lcd.setCursor(3,0);
-  lcd.setCursor(4,0);
-  lcd.setCursor(5,0);
-  lcd.setCursor(6,0);
-  lcd.setCursor(7,0);
-  lcd.setCursor(8,0);
-  lcd.setCursor(9,0);
-  lcd.setCursor(10,0);
-  lcd.setCursor(11,0);
-  lcd.setCursor(12,0);
-  lcd.setCursor(13,0);
-  lcd.setCursor(14,0);
-  lcd.setCursor(15,0);
-  // bottom row
-  lcd.setCursor(0,1);
-  lcd.setCursor(1,1);
-  lcd.setCursor(2,1);
-  lcd.setCursor(3,1);
-  lcd.setCursor(4,1);
-  lcd.setCursor(5,1);
-  lcd.setCursor(6,1);
-  lcd.setCursor(7,1);
-  lcd.setCursor(8,1);
-  lcd.setCursor(9,1);
-  lcd.setCursor(10,1);
-  lcd.setCursor(11,1);
-  lcd.setCursor(12,1);
-  lcd.setCursor(13,1);
-  lcd.setCursor(14,1);
-  lcd.setCursor(15,1);
-  state->digitalPin[enable].removeObserver("lcd");
   /*     rs rw  d7 to d0
     128 : 0  0  1000      \
       0 : 0  0      0000  full command: 10000000 = set cursor (0,0)
@@ -369,6 +327,48 @@ unittest(setCursor) {
     192 : 0  0  1100      \
     240 : 0  0      1111  full command: 11001111 = set cursor (15,1)
    */
+unittest(setCursor) {
+  state->reset();
+  BitCollector enableBits;
+  logIndex = 0;
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  lcd.begin(16, 2);
+  state->digitalPin[enable].addObserver("lcd", &enableBits);
+  // top row
+  lcd.setCursor(0,0);
+  lcd.setCursor(1,0);
+  lcd.setCursor(2,0);
+  lcd.setCursor(3,0);
+  lcd.setCursor(4,0);
+  lcd.setCursor(5,0);
+  lcd.setCursor(6,0);
+  lcd.setCursor(7,0);
+  lcd.setCursor(8,0);
+  lcd.setCursor(9,0);
+  lcd.setCursor(10,0);
+  lcd.setCursor(11,0);
+  lcd.setCursor(12,0);
+  lcd.setCursor(13,0);
+  lcd.setCursor(14,0);
+  lcd.setCursor(15,0);
+  // bottom row
+  lcd.setCursor(0,1);
+  lcd.setCursor(1,1);
+  lcd.setCursor(2,1);
+  lcd.setCursor(3,1);
+  lcd.setCursor(4,1);
+  lcd.setCursor(5,1);
+  lcd.setCursor(6,1);
+  lcd.setCursor(7,1);
+  lcd.setCursor(8,1);
+  lcd.setCursor(9,1);
+  lcd.setCursor(10,1);
+  lcd.setCursor(11,1);
+  lcd.setCursor(12,1);
+  lcd.setCursor(13,1);
+  lcd.setCursor(14,1);
+  lcd.setCursor(15,1);
+  state->digitalPin[enable].removeObserver("lcd");
   const int expectedSize = 64;
   int expected[expectedSize] = {128, 0, 128, 16, 128, 32, 128, 48, 128, 64,
                                 128, 80, 128, 96, 128, 112, 128, 128, 128, 144,
