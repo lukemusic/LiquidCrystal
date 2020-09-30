@@ -524,3 +524,29 @@ unittest(noDisplay) {
   lcd.noDisplay();
   assertTrue(pinValues.isEqualTo(expected));
 }
+
+/*     rs rw  d7 to d0
+    0 : 0  0  0000
+  112 : 0  0      0111
+*/
+unittest(autoscroll) {
+  vector<int> expected{0, 112};
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  lcd.begin(16, 2);
+  BitCollector pinValues(false); // test the next line
+  lcd.autoscroll();
+  assertTrue(pinValues.isEqualTo(expected));
+}
+
+/*     rs rw  d7 to d0
+    0 : 0  0  0000
+   96 : 0  0      0110
+*/
+unittest(noAutoscroll) {
+  vector<int> expected{0, 96};
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  lcd.begin(16, 2);
+  BitCollector pinValues(false); // test the next line
+  lcd.noAutoscroll();
+  assertTrue(pinValues.isEqualTo(expected));
+}
