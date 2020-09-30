@@ -1,5 +1,5 @@
 #include "LiquidCrystal_CI.h"
-#ifdef MOCK_PINS_COUNT
+#ifdef ARDUINO_CI
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -43,6 +43,8 @@ void LiquidCrystal_CI::init(uint8_t rs) {
   _display = false;
   _cursor = false;
   _blink = false;
+  _lines.clear();
+  _lines.resize(_rows);
   LiquidCrystal_CI::_instances[_rs_pin] = this;
 }
 
@@ -55,13 +57,15 @@ void LiquidCrystal_CI::begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
   _display = false;
   _cursor = false;
   _blink = false;
-  clearBuffer();
+  _lines.clear();
+  _lines.resize(_rows);
 }
 
 /********** high level commands, for the user! */
 void LiquidCrystal_CI::clear() {
   LiquidCrystal_Base::clear();
-  clearBuffer();
+  _lines.clear();
+  _lines.resize(_rows);
 }
 
 void LiquidCrystal_CI::home() {
@@ -139,21 +143,5 @@ size_t LiquidCrystal_CI::write(const char *buffer, size_t size) {
 // private data and functions to support testing
 
 LiquidCrystal_CI *LiquidCrystal_CI::_instances[MOCK_PINS_COUNT];
-
-void LiquidCrystal_CI::clearBuffer() {
-  for (int row = 0; row < MAX_ROWS; ++row) {
-    for (int col = 0; col < MAX_COLS; ++col) {
-      _buffer[row][col] = ' ';
-    }
-    if (_cols < MAX_COLS) {
-      _buffer[row][_cols] = '\0';
-    } else {
-      _buffer[row][MAX_COLS] = '\0';
-    }
-    if (_rows <= row) {
-      _buffer[row][0] = '\0';
-    }
-  }
-}
 
 #endif
