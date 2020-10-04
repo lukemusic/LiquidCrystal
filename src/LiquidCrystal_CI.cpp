@@ -135,6 +135,10 @@ void LiquidCrystal_CI::createChar(uint8_t location, uint8_t charmap[]) {
   LiquidCrystal_Base::createChar(location, charmap);
 }
 
+inline size_t LiquidCrystal_CI::write(uint8_t value) {
+  return LiquidCrystal_Base::write(value);
+}
+
 // override lower-level write to capture output
 size_t LiquidCrystal_CI::write(const char *buffer, size_t size) {
   return LiquidCrystal_Base::write(buffer, size);

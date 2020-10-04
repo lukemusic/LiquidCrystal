@@ -53,6 +53,7 @@ public:
   void noAutoscroll();
   void createChar(uint8_t, uint8_t[]);
   void setCursor(uint8_t, uint8_t);
+  size_t write(uint8_t);
   size_t write(const char *buffer, size_t size);
   virtual String className() const { return "LiquidCrystal_CI"; }
 
