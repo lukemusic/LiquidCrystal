@@ -66,6 +66,8 @@ public:
   bool isBlink() { return _blink; }
   bool isCursor() { return _cursor; }
   bool isDisplay() { return _display; }
+  int getCursorCol() { return _col; }
+  int getCursorRow() { return _row; }
 
 private:
   static LiquidCrystal_CI *_instances[MOCK_PINS_COUNT];

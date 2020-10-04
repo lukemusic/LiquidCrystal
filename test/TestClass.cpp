@@ -52,4 +52,28 @@ unittest(clearBuffer) {
   assertEqual(0, lines.at(1).length());
 }
 
+unittest(setCursorHighLevel) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  // reset lcd to have two lines
+  lcd.begin(16, 2);
+
+  // verify cursor is at beginning
+  assertEqual(0, lcd.getCursorCol());
+  assertEqual(0, lcd.getCursorRow());
+
+  // set cursor to second line
+  lcd.setCursor(0, 1);
+  // verify cursor position
+  assertEqual(0, lcd.getCursorCol());
+  assertEqual(1, lcd.getCursorRow());
+
+  // set cursor to middle of first line
+  lcd.setCursor(4, 0);
+  // verify cursor position
+  assertEqual(4, lcd.getCursorCol());
+  assertEqual(0, lcd.getCursorRow());
+}
+
 unittest_main()
