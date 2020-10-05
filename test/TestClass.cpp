@@ -1,3 +1,4 @@
+// High-Level Tests: testing LiquidCrystal_CI
 
 #define LiquidCrystal_Test LiquidCrystal
 #include "Common.cpp"
@@ -14,7 +15,7 @@ unittest(getRows) {
   assertEqual(2, lcd.getRows());
 }
 
-unittest(clearBuffer) {
+unittest(clear_high) {
   // create lcd object
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   // get currently displayed lines
@@ -52,7 +53,25 @@ unittest(clearBuffer) {
   assertEqual(0, lines.at(1).length());
 }
 
-unittest(setCursorHighLevel) {
+unittest(createChar_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(write_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(print_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(setCursor_high) {
   // create lcd object
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
 
@@ -74,6 +93,75 @@ unittest(setCursorHighLevel) {
   // verify cursor position
   assertEqual(4, lcd.getCursorCol());
   assertEqual(0, lcd.getCursorRow());
+}
+
+unittest(home_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(display_high) {
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  bool isDisplay = lcd.isDisplay();
+
+  // default
+  assertEqual(0, isDisplay);
+
+  // test is display on
+  lcd.display();
+  isDisplay = lcd.isDisplay();
+  assertEqual(1, isDisplay);
+
+  // test is display off
+  lcd.noDisplay();
+  isDisplay = lcd.isDisplay();
+  assertEqual(0, isDisplay);
+}
+
+unittest(blink_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  bool blinking = lcd.isBlink();
+
+  // check default - noBlink
+  assertEqual(0, blinking);
+
+  // check blink function
+  lcd.blink();
+  blinking = lcd.isBlink();
+  assertEqual(1, blinking);
+
+  // check noBlink function
+  lcd.noBlink();
+  blinking = lcd.isBlink();
+  assertEqual(0, blinking);
+}
+
+unittest(cursor_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(noCursor_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(autoscroll_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
+}
+
+unittest(noAutoscroll_high) {
+  // create lcd object
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+  // TODO
 }
 
 unittest_main()

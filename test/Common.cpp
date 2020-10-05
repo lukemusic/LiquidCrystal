@@ -157,11 +157,11 @@ unittest(begin) {
     208 : 0  0      1101  00001101 = display on, cursor blink on
 */
 unittest(blink) {
-  vector<int> expected{0, 192};
+  vector<int> expected{0, 208};
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
   lcd.begin(16, 2);
   BitCollector pinValues(false); // test the next line
-  lcd.noBlink();
+  lcd.blink();
   assertTrue(pinValues.isEqualTo(expected));
 }
 
