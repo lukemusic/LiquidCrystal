@@ -52,6 +52,25 @@ unittest(clearBuffer) {
   assertEqual(0, lines.at(1).length());
 }
 
+unittest(display_noDisplay) {
+  LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
+
+  bool isDisplay = lcd.isDisplay();
+
+  // default
+  assertEqual(0, isDisplay);
+
+  // test is display on
+  lcd.display();
+  isDisplay = lcd.isDisplay();
+  assertEqual(1, isDisplay);
+
+  // test is display off
+  lcd.noDisplay();
+  isDisplay = lcd.isDisplay();
+  assertEqual(0, isDisplay);
+}
+
 unittest(blink_noBlink) {
   // create lcd object
   LiquidCrystal_Test lcd(rs, enable, d4, d5, d6, d7);
